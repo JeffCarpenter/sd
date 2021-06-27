@@ -14,26 +14,32 @@ jobs:
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             use-cross: false
+            ext: ""
 
           - os: ubuntu-latest
             target: x86_64-unknown-linux-musl
             use-cross: false
+            ext: ""
 
           - os: ubuntu-latest
             target: arm-unknown-linux-gnueabihf
             use-cross: true
+            ext: ""
 
           - os: windows-latest
             target: x86_64-pc-windows-msvc
             use-cross: false
+            ext: ".exe"
 
           - os: macos-latest
             target: x86_64-apple-darwin
             use-cross: false
+            ext: ""
 
           - os: macos-latest
             target: aarch64-apple-darwin
             use-cross: false
+            ext: ""
 
     steps:
     - name: Checkout repository
@@ -69,6 +75,6 @@ jobs:
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/sd
+        file: target/release/sd${{ matrix.ext }}
         asset_name: sd-${{ steps.version.outputs.VERSION }}-${{ matrix.target }}
         tag: ${{ github.ref }}
